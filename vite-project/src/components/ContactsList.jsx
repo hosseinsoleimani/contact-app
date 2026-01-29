@@ -1,21 +1,16 @@
+import ContactItem from "./ContactItem"
 
-function ContactsList({contacts}){
-    
+
+function ContactsList({contacts , deleteHandler}){
+   
     return(
         <div>
             <h3>Contacts List</h3>
-            {contacts.length ? <ul>
+            {contacts.length ? 
+            <ul>
                 {contacts.map(contact=>(
-                    <li key={contact.id}>
-                        <p>{contact.name} {contact.lastName}</p>
-                        <p>
-                            <span>📧</span> {contact.email}
-                        </p>
-                        <p>
-                            <span>📱</span> {contact.phone}
-                        </p>
-                        <button>🗑️</button>
-                    </li>))}
+                    <ContactItem key={contact.id} data={contact} deleteHandler={deleteHandler}/>
+                   ))}
             </ul> : <p>No Contacts Yet!</p> }
 
         </div>
