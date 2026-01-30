@@ -31,16 +31,36 @@ function Contacts(){
         }
         
         setAlert("")
+
+        if(contact.id){
+            const editContact= contacts.map(item=>{
+                if(item.id===contact.id){
+                    return contact;
+                }else{
+                    return item;
+                }    
+            })
+            setContacts(editContact)
+            setContact({
+            name:"",lastName:"",email:"",phone:""
+            })
+        }else{
         const newContact={...contact, id: v4()}
         setContacts(contacts=>([...contacts,newContact]))
         setContact({
         name:"",lastName:"",email:"",phone:""
-    })
+        })}
     }
 
     const deleteHandler=(id)=>{
         const newContacts=contacts.filter(contact=> contact.id !=id);
         setContacts(newContacts);
+    }
+
+    const editHandler=(id)=>{
+        const newContact=contacts.find(contact=>contact.id===id);
+        setContact(newContact);
+
     }
 
     return(
@@ -55,10 +75,10 @@ function Contacts(){
                     value={contact[input.name]}
                     onChange={changeHandler} />))
                 }
-                <button onClick={addHandler}>Add Contact</button>
+                <button onClick={addHandler}>{contact.id ? "Update Contact" : "Add Contact"}</button>
             </div>
             <div className={styles.alert}>{alert && <p>{alert}</p>}</div>
-            <ContactsList contacts={contacts} deleteHandler={deleteHandler}/>
+            <ContactsList contacts={contacts} deleteHandler={deleteHandler} editHandler={editHandler}/>
         </div>
     )
 }
