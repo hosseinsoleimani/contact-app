@@ -16,6 +16,7 @@ function Contacts(){
         email:"",
         phone:""
     });
+    const[search,setSearch]=useState("")
 
     const changeHandler=(event)=>{
         const name=event.target.name;
@@ -62,6 +63,13 @@ function Contacts(){
         setContact(newContact);
 
     }
+    const searchHandler=(event=>setSearch(event.target.value));
+
+
+    const filteredContacts= contacts.filter((contact)=>{
+        const fullText=`${contact.name} ${contact.lastName} ${contact.email}`.toLowerCase();
+        return fullText.includes(search.toLowerCase());
+    })
 
     return(
         <div className={styles.container}>
@@ -76,9 +84,10 @@ function Contacts(){
                     onChange={changeHandler} />))
                 }
                 <button onClick={addHandler}>{contact.id ? "Update Contact" : "Add Contact"}</button>
+                <input type="text" placeholder="Search" value={search} onChange={searchHandler} />
             </div>
             <div className={styles.alert}>{alert && <p>{alert}</p>}</div>
-            <ContactsList contacts={contacts} deleteHandler={deleteHandler} editHandler={editHandler}/>
+            <ContactsList contacts={filteredContacts} deleteHandler={deleteHandler} editHandler={editHandler}/>
         </div>
     )
 }
