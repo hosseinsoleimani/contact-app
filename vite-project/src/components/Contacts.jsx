@@ -4,7 +4,8 @@ import{v4} from "uuid"
 import ContactsList from "./ContactsList";
 import inputs from "../constants/inputs";
 
-import styles from "./Contacts.module.css"
+import styles from "./Contacts.module.css";
+import Modal from "./Modal";
 
 function Contacts(){
     const[contacts,setContacts]=useState([]);
@@ -16,7 +17,10 @@ function Contacts(){
         email:"",
         phone:""
     });
-    const[search,setSearch]=useState("")
+    const[search,setSearch]=useState("");
+    const[isModalOpen,setIsModalOpen]=useState(false);
+
+    const[tempDeleteId,setTempDeleteId]=useState(null);
 
     const changeHandler=(event)=>{
         const name=event.target.name;
@@ -24,6 +28,9 @@ function Contacts(){
 
         setContact((contact)=>({...contact,[name]:value}))
     }
+      const toggleModal=()=>{
+      setIsModalOpen((prev)=>!prev)
+  }
 
     const addHandler=()=>{
         if(!contact.name || !contact.lastName || !contact.email || !contact.phone){
@@ -54,8 +61,8 @@ function Contacts(){
     }
 
     const deleteHandler=(id)=>{
-        const newContacts=contacts.filter(contact=> contact.id !=id);
-        setContacts(newContacts);
+        setTempDeleteId(id);
+        toggleModal();
     }
 
     const editHandler=(id)=>{
@@ -70,6 +77,14 @@ function Contacts(){
         const fullText=`${contact.name} ${contact.lastName} ${contact.email}`.toLowerCase();
         return fullText.includes(search.toLowerCase());
     })
+
+    const confirmDelete=()=>{
+        const newContacts=contacts.filter(contact=> contact.id !=tempDeleteId);
+        setContacts(newContacts);
+        setTempDeleteId(null);
+        toggleModal();
+    }
+
 
     return(
         <div className={styles.container}>
@@ -88,6 +103,8 @@ function Contacts(){
             </div>
             <div className={styles.alert}>{alert && <p>{alert}</p>}</div>
             <ContactsList contacts={filteredContacts} deleteHandler={deleteHandler} editHandler={editHandler}/>
+            {isModalOpen && <Modal modal={toggleModal} onConfirm={confirmDelete}/>}
+
         </div>
     )
 }

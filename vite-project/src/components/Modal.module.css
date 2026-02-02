@@ -1,0 +1,33 @@
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.box{
+    background: #dfe1ec;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.box button{
+    width: 50px;
+    height: 45px;
+    margin: 10px 5px;
+    background-color: #304ffe;
+    color: #fff;
+    border: none;
+    border-radius: 30%;
+    cursor: pointer;
+    transition: 0.1s all ease-in-out;
+}
+
+.box button:hover{
+    background-color: #3f50b1;
+}
