@@ -40,3 +40,8 @@
 .item button:hover{
     font-size: 1.5rem;
 }
+
+.checkbox{
+    margin-right: 10px;
+    transform: scale(1.7);
+}

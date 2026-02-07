@@ -1,7 +1,7 @@
 import ContactItem from "./ContactItem"
 import styles from "./ContactsList.module.css"
 
-function ContactsList({contacts , deleteHandler ,editHandler}){
+function ContactsList({contacts , deleteHandler ,editHandler , checkHandler, selectedContacts}){
    
     return(
         <div className={styles.container}>
@@ -9,7 +9,7 @@ function ContactsList({contacts , deleteHandler ,editHandler}){
             {contacts.length ? 
             <ul className={styles.contacts}>
                 {contacts.map(contact=>(
-                    <ContactItem key={contact.id} data={contact} deleteHandler={deleteHandler} editHandler={editHandler}/>
+                    <ContactItem key={contact.id} data={contact} deleteHandler={deleteHandler} editHandler={editHandler} checkHandler={checkHandler} selectedContacts={selectedContacts}/>
                    ))}
             </ul> : <p className={styles.message}>No Contacts Yet!</p> }
 
